@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rider Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rider_dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#"><i class="fas fa-baby"></i> Kids & Baby</a>
+            </div>
+            <div class="nav-links">
+                <a href="/login"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="mobile-message">
+            <i class="fas fa-mobile-alt"></i>
+            <h2>Please Use Our Mobile App</h2>
+            <p>For the best experience, we recommend using our mobile application. Hindi recommended gamitin ni rider ang web as much as possible mobile app talaga.</p>
+            <div class="app-buttons">
+                <a href="#" class="app-button ios">
+                    <i class="fab fa-apple"></i> App Store
+                </a>
+                <a href="#" class="app-button android">
+                    <i class="fab fa-google-play"></i> Google Play
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

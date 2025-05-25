@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2 class="title">Create Account</h2>
+      <p class="subtitle">Join our community today</p>
+    </div>
+    
+    <form method="POST" action="{{ url_for('register.register_page') }}" class="form" id="registrationForm">
+      <!-- Username Field -->
+      <div class="form-group">
+        <label for="username">Username <span class="required-asterisk">*</span></label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email <span class="required-asterisk">*</span></label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password <span class="required-asterisk">*</span></label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Create a password" required>
+        <div class="password-requirements">
+          <small>Password must contain:</small>
+          <ul>
+            <li id="req-length">At least 8 characters</li>
+            <li id="req-upper">One uppercase letter</li>
+            <li id="req-lower">One lowercase letter</li>
+            <li id="req-number">One number</li>
+            <li id="req-special">One special character</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div class="form-group">
+        <label for="confirm_password">Confirm Password <span class="required-asterisk">*</span></label>
+        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirm your password" required>
+        <small id="password-match" class="hint"></small>
+      </div>
+
+      <!-- Role Selection Field -->
+      <div class="form-group">
+        <label for="role">I want to register as a <span class="required-asterisk">*</span></label>
+        <select id="role" name="role" class="form-control" required>
+          <option value="" disabled selected>Select your role</option>
+          <option value="buyer">Buyer</option>
+          <option value="seller">Seller</option>
+          <option value="rider">Rider</option>
+        </select>
+      </div>
+
+      <!-- Address Fields (Dropdowns) -->
+      <div class="address-group">
+        <div class="form-group">
+          <label for="province">Province <span class="required-asterisk">*</span></label>
+          <select id="province" name="province_select" class="form-control" required>
+            <option value="" disabled selected>Select your province</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="municipal">Municipality/City <span class="required-asterisk">*</span></label>
+          <select id="municipal" name="municipal_select" class="form-control" required>
+            <option value="" disabled selected>Select your municipality</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="barangay">Barangay <span class="required-asterisk">*</span></label>
+          <select id="barangay" name="barangay_select" class="form-control" required>
+            <option value="" disabled selected>Select your barangay</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Contact Number Field -->
+      <div class="form-group">
+        <label for="contact_number">Contact Number <span class="required-asterisk">*</span></label>
+        <input type="tel" id="contact_number" name="contact_number" class="form-control" placeholder="Must start with 09" pattern="[0-9]{11}" required>
+        <small class="hint">11-digit mobile number</small>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary">Create Account</button>
+    </form>
+
+    <div class="footer">
+      <p>Already have an account? <a href="/login" class="login-link">Sign in</a></p>
+    </div>
+  </div>
+
+  <!-- Notification element -->
+  <div id="notification" class="notification"></div>
+
+  <script src="{{ url_for('static', filename='js/API.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f4ff;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.form-header h1 {
+    color: #6a3093;
+    margin-bottom: 8px;
+    font-size: 28px;
+}
+
+.form-header p {
+    color: #666;
+    margin: 0;
+    font-size: 15px;
+}
+
+/* Product Info */
+.product-info {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #f9f4ff;
+    border-radius: 8px;
+    border-left: 4px solid #9c4dff;
+}
+
+.product-info p {
+    margin: 0;
+    color: #555;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+    transition: border 0.3s;
+    background-color: #fcfcfc;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #9c4dff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(156, 77, 255, 0.1);
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Form Layout */
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.half-width {
+    flex: 1;
+}
+
+/* Buttons */
+.btn-submit {
+    background-color: #7b2cbf;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.3s;
+    text-align: center;
+    display: block;
+}
+
+.btn-submit:hover {
+    background-color: #6a3093;
+    transform: translateY(-2px);
+}
+
+.btn-dashboard {
+    background-color: white;
+    color: #7b2cbf;
+    padding: 14px 20px;
+    border: 2px solid #7b2cbf;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block; /* Changed from default inline */
+    box-sizing: border-box; /* Include padding in width */
+    line-height: normal; /* Reset line height */
+}
+
+.btn-dashboard:hover {
+    background-color: #f3e9ff;
+    transform: translateY(-2px);
+}
+
+.form-actions {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Image Preview */
+.image-preview-container {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 300px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    padding: 5px;
+    background-color: #fcfcfc;
+    display: none;
+}
+
+.no-image {
+    width: 100%;
+    height: 180px;
+    background-color: #f9f4ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ddd;
+    border-radius: 6px;
+    color: #888;
+    margin-top: 10px;
+}
+
+.current-image-label {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+    display: block;
+}
+
+/* File Input */
+.file-input-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.file-input-button {
+    border: 2px solid #7b2cbf;
+    color: #7b2cbf;
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.file-input-button:hover {
+    background-color: #7b2cbf;
+    color: white;
+}
+
+.file-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+/* Messages */
+.message {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 6px;
+    display: none;
+    text-align: center;
+    font-weight: 500;
+}
+
+.success {
+    background-color: #e6f7ee;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.error {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 15px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .half-width {
+        width: 100%;
+    }
+}

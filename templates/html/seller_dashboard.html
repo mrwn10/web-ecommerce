@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seller Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/seller_dashboard.css') }}"/>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="nav-container">
+    <div class="nav-logo">
+      <a href="#"><i class="fas fa-store"></i> Seller Dashboard</a>
+    </div>
+    <div class="nav-links">
+      <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
+      <a href="/seller_products"><i class="fas fa-store me-2"></i> My Products</a>
+      <a href="/seller_account_settings"><i class="fas fa-user"></i> Profile</a>
+      <a href="/login"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+  </nav>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flash-messages">
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="dashboard-header">
+      <h1>Your Products</h1>
+      <button class="add-product-btn" onclick="document.getElementById('addModal').style.display='block'">
+        <i class="fas fa-plus"></i> Add Product
+      </button>
+    </div>
+
+    <!-- Product Table -->
+    <div id="product-table-container" class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td>
+              {% if product.image %}
+                <img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="{{ product.product_name }}" class="product-image">
+              {% else %}
+                <div class="no-image">No Image</div>
+              {% endif %}
+            </td>
+            <td>{{ product.product_name }}</td>
+            <td class="description-cell">{{ product.description }}</td>
+            <td>${{ "%.2f"|format(product.product_price) }}</td>
+            <td>{{ product.quantity_status }}</td>
+            <td>{{ product.category.replace('_', ' ')|title }}</td>
+            <td class="action-buttons">
+                <a href="/seller_update?product_id=${product.product_id}" class="btn-update">
+                  <i class="fas fa-edit"></i> Update
+                </a>
+                <button onclick="deleteProduct('${product.product_id}')" class="btn-delete">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+          </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal for Add Product -->
+  <div id="addModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('addModal').style.display='none'">&times;</span>
+      <h2><i class="fas fa-plus-circle"></i> Add New Product</h2>
+      <form action="/add-product" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="product_name"><i class="fas fa-tag"></i> Product Name:</label>
+          <input type="text" id="product_name" name="product_name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="description"><i class="fas fa-align-left"></i> Description:</label>
+          <textarea id="description" name="description" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="product_price"><i class="fas fa-dollar-sign"></i> Price:</label>
+          <input type="number" id="product_price" name="product_price" step="0.01" min="0" required>
+        </div>
+
+        <div class="form-group">
+          <label for="quantity_status"><i class="fas fa-boxes"></i> Quantity:</label>
+          <input type="number" id="quantity_status" name="quantity_status" min="0" required>
+        </div>
+
+        <div class="form-group">
+          <label for="category"><i class="fas fa-list"></i> Category:</label>
+          <select id="category" name="category" required>
+            <option value="baby_clothes_accessories">Baby Clothes & Accessories</option>
+            <option value="toys_and_games">Toys and Games</option>
+            <option value="educational_materials">Educational Materials</option>
+            <option value="strollers_gears">Strollers & Gears</option>
+            <option value="nursery_furniture">Nursery Furniture</option>
+            <option value="safety_and_health">Safety and Health</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="image"><i class="fas fa-image"></i> Product Image:</label>
+          <input type="file" id="image" name="image" accept="image/*" required>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-check"></i> Submit Product
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/seller_dashboard.js') }}"></script>
+</body>
+</html>

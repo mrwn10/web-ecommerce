@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#"><i class="fas fa-baby"></i> Kids & Baby</a>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="/admin_users_management"><i class="fas fa-users-cog"></i> Users Management</a>
+                <a href="/admin_account_settings"><i class="fas fa-user"></i> Profile</a>
+                <a href="/login"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- User Statistics Section -->
+    <div class="user-stats-container">
+        <h2>User Statistics</h2>
+        <div id="userStats">
+            <p>Loading user statistics...</p>
+        </div>
+    </div>
+
+    <!-- Analytics Section -->
+    <div class="analytics-container">
+        <h2>Sales & Orders Analytics</h2>
+        <div class="analytics-controls">
+            <div class="chart-tabs">
+                <button class="tab-button active" onclick="showChart('monthly')">Monthly</button>
+                <button class="tab-button" onclick="showChart('yearly')">Yearly</button>
+            </div>
+            <div id="monthlyControls" class="chart-controls">
+                <select id="yearSelect" onchange="filterByYear()">
+                    <option value="all">All Years</option>
+                </select>
+                <button onclick="resetZoom()" class="control-button">
+                    <i class="fas fa-search-minus"></i> Reset Zoom
+                </button>
+            </div>
+            <div id="yearlyControls" class="chart-controls" style="display: none;">
+                <div class="date-range">
+                    <input type="number" id="startYear" placeholder="Start Year" min="2000" max="2099">
+                    <span>to</span>
+                    <input type="number" id="endYear" placeholder="End Year" min="2000" max="2099">
+                    <button onclick="filterByYearRange()" class="control-button">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                </div>
+                <button onclick="resetZoom()" class="control-button">
+                    <i class="fas fa-search-minus"></i> Reset Zoom
+                </button>
+            </div>
+        </div>
+        <div class="chart-wrapper">
+            <div class="chart-container">
+                <canvas id="combinedChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-summary">
+            <div id="chartSummaryContent"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
+</body>
+</html>

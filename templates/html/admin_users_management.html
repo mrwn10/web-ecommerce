@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_users_management.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="header-content">
+                <h1><i class="fas fa-users-cog"></i> Users Management</h1>
+                <a href="/admin_dashboard" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </header>
+
+        <main class="user-management">
+            <!-- Riders Section -->
+            <section class="user-category">
+                <div class="category-header">
+                    <h2><i class="fas fa-motorcycle"></i> Riders</h2>
+                    <div class="user-count" id="riders-count">0 riders</div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="riders-table">
+                        <thead>
+                            <tr>
+                                <th class="col-id">ID</th>
+                                <th class="col-name">Username</th>
+                                <th class="col-email">Email</th>
+                                <th class="col-location">Location</th>
+                                <th class="col-contact">Contact</th>
+                                <th class="col-earnings">Earnings</th>
+                                <th class="col-orders">Orders</th>
+                                <th class="col-status">Status</th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Riders data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                    <div id="riders-empty" class="empty-message">
+                        <i class="fas fa-user-slash"></i>
+                        <p>No riders found</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sellers Section -->
+            <section class="user-category">
+                <div class="category-header">
+                    <h2><i class="fas fa-store"></i> Sellers</h2>
+                    <div class="user-count" id="sellers-count">0 sellers</div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="sellers-table">
+                        <thead>
+                            <tr>
+                                <th class="col-id">ID</th>
+                                <th class="col-name">Username</th>
+                                <th class="col-email">Email</th>
+                                <th class="col-location">Location</th>
+                                <th class="col-contact">Contact</th>
+                                <th class="col-products">Products</th>
+                                <th class="col-status">Status</th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Sellers data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                    <div id="sellers-empty" class="empty-message">
+                        <i class="fas fa-user-slash"></i>
+                        <p>No sellers found</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Buyers Section -->
+            <section class="user-category">
+                <div class="category-header">
+                    <h2><i class="fas fa-shopping-basket"></i> Buyers</h2>
+                    <div class="user-count" id="buyers-count">0 buyers</div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="buyers-table">
+                        <thead>
+                            <tr>
+                                <th class="col-id">ID</th>
+                                <th class="col-name">Username</th>
+                                <th class="col-email">Email</th>
+                                <th class="col-location">Location</th>
+                                <th class="col-contact">Contact</th>
+                                <th class="col-orders">Orders</th>
+                                <th class="col-status">Status</th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Buyers data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                    <div id="buyers-empty" class="empty-message">
+                        <i class="fas fa-user-slash"></i>
+                        <p>No buyers found</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchUsers();
+            
+            // Refresh data every 60 seconds to update restriction times
+            setInterval(fetchUsers, 60000);
+        });
+
+        function fetchUsers() {
+            fetch('/api/admin/get_users')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    populateTable('riders', data.riders);
+                    populateTable('sellers', data.sellers);
+                    populateTable('buyers', data.buyers);
+                    
+                    // Update counts
+                    document.getElementById('riders-count').textContent = `${data.riders.length} ${data.riders.length === 1 ? 'rider' : 'riders'}`;
+                    document.getElementById('sellers-count').textContent = `${data.sellers.length} ${data.sellers.length === 1 ? 'seller' : 'sellers'}`;
+                    document.getElementById('buyers-count').textContent = `${data.buyers.length} ${data.buyers.length === 1 ? 'buyer' : 'buyers'}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching users:', error);
+                    alert('Failed to load user data. Please try again later.');
+                });
+        }
+
+        function activateUser(userId, username, email) {
+            if (confirm(`Are you sure you want to activate ${username}'s account?`)) {
+                fetch('/api/admin/activate_user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        email: email,
+                        username: username
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                        fetchUsers(); // Refresh the user list
+                    } else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to activate user');
+                });
+            }
+        }
+
+        function populateTable(type, users) {
+            const tableBody = document.querySelector(`#${type}-table tbody`);
+            const emptyMessage = document.querySelector(`#${type}-empty`);
+            
+            // Clear existing rows
+            tableBody.innerHTML = '';
+            
+            if (users.length === 0) {
+                tableBody.style.display = 'none';
+                emptyMessage.style.display = 'flex';
+                return;
+            }
+            
+            tableBody.style.display = 'table-row-group';
+            emptyMessage.style.display = 'none';
+
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                
+                // Determine status class and text
+                let statusClass, statusText, statusIcon;
+                if (user.account_status === 'active') {
+                    statusClass = 'status-active';
+                    statusText = 'Active';
+                    statusIcon = '<i class="fas fa-check-circle"></i>';
+                } else if (user.account_status === 'banned') {
+                    statusClass = 'status-banned';
+                    statusText = 'Banned';
+                    statusIcon = '<i class="fas fa-ban"></i>';
+                } else if (user.account_status === 'restricted') {
+                    statusClass = 'status-restricted';
+                    statusText = user.restriction_time_left ? 
+                        `Restricted (${user.restriction_time_left})` : 'Restricted';
+                    statusIcon = '<i class="fas fa-clock"></i>';
+                }
+
+                // Common columns
+                let rowContent = `
+                    <td class="col-id">${user.id}</td>
+                    <td class="col-name">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        ${user.username}
+                    </td>
+                    <td class="col-email">${user.email}</td>
+                    <td class="col-location">
+                        <div class="location-text" title="${user.province}, ${user.municipal}, ${user.barangay}">
+                            ${user.barangay}, ${user.municipal}
+                        </div>
+                    </td>
+                    <td class="col-contact">${user.contact_number}</td>
+                `;
+                
+                // Role-specific columns
+                if (type === 'riders') {
+                    rowContent += `
+                        <td class="col-earnings">₱${(user.earnings || 0).toFixed(2)}</td>
+                        <td class="col-orders">${user.total_orders || 0}</td>
+                    `;
+                } else if (type === 'sellers') {
+                    rowContent += `
+                        <td class="col-products">${user.product_count || 0}</td>
+                    `;
+                } else if (type === 'buyers') {
+                    rowContent += `
+                        <td class="col-orders">${user.order_count || 0}</td>
+                    `;
+                }
+                
+                // Action buttons logic
+                let actionButtons = '';
+                if (user.account_status === 'active') {
+                    actionButtons = `
+                        <div class="action-buttons">
+                            <a href="/admin_restricted?id=${user.id}&username=${encodeURIComponent(user.username)}&email=${encodeURIComponent(user.email)}" class="action-btn restrict-btn" title="Restrict User">
+                                <i class="fas fa-lock"></i>
+                            </a>
+                            <a href="/admin_banned?id=${user.id}&username=${encodeURIComponent(user.username)}&email=${encodeURIComponent(user.email)}" class="action-btn ban-btn" title="Ban User">
+                                <i class="fas fa-ban"></i>
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    actionButtons = `
+                        <div class="action-buttons">
+                            <button onclick="activateUser('${user.id}', '${user.username}', '${user.email}')" class="action-btn activate-btn" title="Activate User">
+                                <i class="fas fa-check-circle"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                // Status and action buttons
+                rowContent += `
+                    <td class="col-status ${statusClass}">
+                        <div class="status-badge">
+                            ${statusIcon}
+                            <span>${statusText}</span>
+                        </div>
+                    </td>
+                    <td class="col-actions">
+                        ${actionButtons}
+                    </td>
+                `;
+                
+                row.innerHTML = rowContent;
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>

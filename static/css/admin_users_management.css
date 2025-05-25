@@ -1,0 +1,433 @@
+:root {
+    --primary-color: #6a1b9a;
+    --primary-light: #9c4dcc;
+    --primary-dark: #38006b;
+    --secondary-color: #f3e5f5;
+    --danger-color: #e53935;
+    --warning-color: #ffb300;
+    --success-color: #43a047;
+    --info-color: #1e88e5;
+    --light-gray: #f5f5f5;
+    --medium-gray: #e0e0e0;
+    --dark-gray: #212121;
+    --text-light: #757575;
+    --white: #ffffff;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: var(--dark-gray);
+    line-height: 1.6;
+}
+
+.admin-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.admin-header {
+    margin-bottom: 30px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.admin-header h1 {
+    color: var(--primary-color);
+    font-size: 28px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: var(--transition);
+    border: 2px solid var(--primary-color);
+}
+
+.back-btn:hover {
+    background-color: var(--white);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.user-management {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.user-category {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.category-header h2 {
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-count {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.table-container {
+    overflow-x: auto;
+    padding: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+thead {
+    background-color: var(--light-gray);
+}
+
+th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--dark-gray);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--medium-gray);
+}
+
+td {
+    padding: 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--medium-gray);
+    color: var(--dark-gray);
+}
+
+tr:not(:last-child) td {
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+tr:hover {
+    background-color: rgba(106, 27, 154, 0.05);
+}
+
+/* Column specific styles */
+.col-id {
+    width: 60px;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.col-name {
+    min-width: 180px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.col-email {
+    min-width: 200px;
+}
+
+.col-location {
+    min-width: 180px;
+}
+
+.location-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+.col-contact {
+    min-width: 120px;
+}
+
+.col-earnings, 
+.col-orders, 
+.col-products {
+    text-align: center;
+    min-width: 80px;
+}
+
+.col-status {
+    min-width: 140px;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.status-active {
+    background-color: rgba(67, 160, 71, 0.1);
+    color: var(--success-color);
+}
+
+.status-banned {
+    background-color: rgba(229, 57, 53, 0.1);
+    color: var(--danger-color);
+}
+
+.status-restricted {
+    background-color: rgba(255, 179, 0, 0.1);
+    color: var(--warning-color);
+}
+
+.col-actions {
+    min-width: 120px;
+    text-align: right;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.restrict-btn {
+    background-color: var(--warning-color);
+}
+
+.ban-btn {
+    background-color: var(--danger-color);
+}
+
+.empty-message {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.empty-message i {
+    font-size: 48px;
+    color: var(--medium-gray);
+    margin-bottom: 15px;
+}
+
+.empty-message p {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .admin-container {
+        padding: 15px;
+    }
+    
+    .category-header {
+        padding: 12px 15px;
+    }
+    
+    th, td {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .admin-header h1 {
+        font-size: 24px;
+    }
+    
+    .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .user-count {
+        align-self: flex-start;
+    }
+    
+    .col-name {
+        min-width: 150px;
+    }
+    
+    .col-email {
+        min-width: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-container {
+        padding: 10px;
+    }
+    
+    .back-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .category-header h2 {
+        font-size: 18px;
+    }
+    
+    th, td {
+        padding: 10px 8px;
+    }
+    
+    .action-buttons {
+        gap: 5px;
+    }
+    
+    .action-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+}
+/* Add to your existing CSS */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.restrict-btn {
+    background-color: var(--warning-color);
+}
+
+.ban-btn {
+    background-color: var(--danger-color);
+}
+
+.activate-btn {
+    background-color: var(--success-color);
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.status-active {
+    background-color: rgba(67, 160, 71, 0.1);
+    color: var(--success-color);
+}
+
+.status-banned {
+    background-color: rgba(229, 57, 53, 0.1);
+    color: var(--danger-color);
+}
+
+.status-restricted {
+    background-color: rgba(255, 179, 0, 0.1);
+    color: var(--warning-color);
+}
